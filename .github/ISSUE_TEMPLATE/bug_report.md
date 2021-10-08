@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help me improve Drippy Loading Screen
+about: Create a report to help me improve the mod
 title: ''
 labels: bug
 assignees: ''
