@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "loadmyresources",
+  "version": "1.0.0",
+  "name": "Load My Resources",
+  "description": "Load 'em with style! | Load My Resources © Copyright 2021 Keksuccino. Load My Resources is licensed under KML. See GitHub repo for more informations about the license.",
+  "environment": "client",
+  "authors": [
+    "Keksuccino"
+  ],
+  "contributors": [],
+  "contact": {},
+  "license": "KML (Keksuccino Mod License)",
+  "icon": "assets/loadmyresources/icon.png",
+  "entrypoints": {
+    "main": [
+      "de.keksuccino.loadmyresources.LoadMyResources"
+    ],
+    "client": [],
+    "server": []
+  },
+  "mixins": [
+    "loadmyresources.mixin.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+	"minecraft": "1.17.x",
+    "java": ">=16"
+  }
+}
