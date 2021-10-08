@@ -1,0 +1,72 @@
+package de.keksuccino.loadmyresources;
+
+import de.keksuccino.loadmyresources.pack.LMRFolderResourcePack;
+import de.keksuccino.loadmyresources.pack.PackHandler;
+import de.keksuccino.loadmyresources.utils.config.Config;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.relauncher.Side;
+
+import java.io.File;
+
+@Mod(modid = "loadmyresources", acceptedMinecraftVersions="[1.12,1.12.2]", dependencies = "required:forge@[14.23.5.2855,]", clientSideOnly = true)
+public class LoadMyResources {
+
+    public static final String VERSION = "1.0.0";
+    
+    public static final File HOME_DIR = new File("config/loadmyresources/");
+
+    public static Config config;
+
+    public LoadMyResources() {
+
+        if (FMLClientHandler.instance().getSide() == Side.CLIENT) {
+
+            if (!HOME_DIR.exists()) {
+                HOME_DIR.mkdirs();
+            }
+
+            updateConfig();
+
+            PackHandler.init();
+
+            initPack();
+
+//            MinecraftForge.EVENT_BUS.register(new Test());
+
+        } else {
+            System.out.println("## WARNING ## 'Load My Resources' is a client mod and has no effect when loaded on a server!");
+        }
+
+    }
+
+    private static void initPack() {
+
+        PackHandler.addPackToDefaults(new LMRFolderResourcePack());
+        System.out.println("[LOAD MY RESOURCES] Pack registered!");
+
+    }
+
+    public static void updateConfig() {
+
+        try {
+
+            config = new Config(HOME_DIR.getPath() + "/config.cfg");
+
+            //---------------------
+
+            config.registerValue("resource_path", "resources/", "general", "The path to load resources from.");
+
+            //---------------------
+
+            config.syncConfig();
+
+            config.clearUnusedValues();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+}
