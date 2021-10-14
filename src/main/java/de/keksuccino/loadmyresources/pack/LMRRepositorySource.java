@@ -1,5 +1,6 @@
 package de.keksuccino.loadmyresources.pack;
 
+import de.keksuccino.loadmyresources.LoadMyResources;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -19,7 +20,7 @@ public class LMRRepositorySource implements RepositorySource {
         if (p != null) {
             consumer.accept(p);
         } else {
-            System.err.println("[LOAD MY RESOURCES] ERROR: Failed to create pack: " + PackHandler.resourcesDirectory.getAbsolutePath());
+            LoadMyResources.LOGGER.error("[LOAD MY RESOURCES] ERROR: Failed to create pack: " + PackHandler.resourcesDirectory.getAbsolutePath());
         }
 
     }

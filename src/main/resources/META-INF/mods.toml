@@ -23,9 +23,16 @@ COPYRIGHT:
   Load My Resources is licensed under KML.
   See GitHub repo for more informations about the license.'''
 
-[[dependencies.fancymenu]]
+[[dependencies.loadmyresources]]
 modId="forge"
 mandatory=true
-versionRange="[37.0.65,)"
+versionRange="[37.0.90,)"
 ordering="NONE"
-side="BOTH"
+side="CLIENT"
+
+[[dependencies.loadmyresources]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.17,)"
+ordering="NONE"
+side="CLIENT"

@@ -1,14 +1,13 @@
 package de.keksuccino.loadmyresources;
 
-import de.keksuccino.loadmyresources.pack.LMRRepositorySource;
 import de.keksuccino.loadmyresources.pack.PackHandler;
 import de.keksuccino.loadmyresources.utils.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
@@ -19,9 +18,11 @@ public class LoadMyResources {
     
     public static final File HOME_DIR = new File("config/loadmyresources/");
 
+    public static final Logger LOGGER = LogManager.getLogger();
+
     public static Config config;
 
-    public LoadMyResources() {
+    public static boolean init() {
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
 
@@ -33,24 +34,28 @@ public class LoadMyResources {
 
             PackHandler.init();
 
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegisterReloadListeners);
+//            FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegisterReloadListeners);
 
 //            MinecraftForge.EVENT_BUS.register(new Test());
 
+            return true;
+
         } else {
-            System.out.println("## WARNING ## 'Load My Resources' is a client mod and has no effect when loaded on a server!");
+            LOGGER.warn("## WARNING ## 'Load My Resources' is a client mod and has no effect when loaded on a server!");
         }
 
-    }
-
-    //Forge Only - Mixin needed in Fabric: Add 'LoadMyRepositorySource' instance to 'providers' field in TAIL of 'ResourcePackManager' constructor
-    private void onRegisterReloadListeners(RegisterClientReloadListenersEvent e) {
-
-        Minecraft.getInstance().getResourcePackRepository().addPackFinder(new LMRRepositorySource());
-        Minecraft.getInstance().getResourcePackRepository().reload();
-        System.out.println("[LOAD MY RESOURCES] Pack registered!");
+        return false;
 
     }
+
+//    //Forge Only - Mixin needed in Fabric: Add 'LoadMyRepositorySource' instance to 'providers' field in TAIL of 'ResourcePackManager' constructor
+//    private void onRegisterReloadListeners(RegisterClientReloadListenersEvent e) {
+//
+//        Minecraft.getInstance().getResourcePackRepository().addPackFinder(new LMRRepositorySource());
+//        Minecraft.getInstance().getResourcePackRepository().reload();
+//        System.out.println("[LOAD MY RESOURCES] Pack registered!");
+//
+//    }
 
     public static void updateConfig() {
 
@@ -69,9 +74,15 @@ public class LoadMyResources {
             config.clearUnusedValues();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            printStackTrace(e);
         }
 
+    }
+
+    public static void printStackTrace(Exception e) {
+        for (StackTraceElement s : e.getStackTrace()) {
+            LOGGER.error(s.toString());
+        }
     }
 
 }

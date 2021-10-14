@@ -2,6 +2,7 @@ package de.keksuccino.loadmyresources.pack;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import de.keksuccino.loadmyresources.LoadMyResources;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.client.resources.language.LanguageInfo;
 import net.minecraft.client.resources.metadata.language.LanguageMetadataSection;
@@ -95,7 +96,7 @@ public class LMRPackResources extends FolderPackResources {
                     try {
                         resourceList.add(new ResourceLocation(namespace, resourcePreNamePath + f.getName()));
                     } catch (ResourceLocationException resourcelocationexception) {
-                        System.err.println(resourcelocationexception.getMessage());
+                        LoadMyResources.LOGGER.error(resourcelocationexception.getMessage());
                     }
                 }
             }

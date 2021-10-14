@@ -19,10 +19,10 @@ public class PackHandler {
         if (LoadMyResources.config != null) {
             resourcesDirectory = new File(LoadMyResources.config.getOrDefault("resource_path", "resources/"));
         } else {
-            System.err.println("[LOAD MY RESOURCES] ERROR: Config not loaded! Can't get resource path! Path set to default 'resources/'!");
+            LoadMyResources.LOGGER.error("[LOAD MY RESOURCES] ERROR: Config not loaded! Can't get resource path! Path set to default 'resources/'!");
         }
 
-        System.out.println("[LOAD MY RESOURCES] PackHandler initialized!");
+        LoadMyResources.LOGGER.info("[LOAD MY RESOURCES] PackHandler initialized!");
 
     }
 
@@ -32,52 +32,7 @@ public class PackHandler {
             resourcesDirectory.mkdirs();
         }
 
-//        if (!ASSETS_DIR.isDirectory()) {
-//            ASSETS_DIR.mkdirs();
-//        }
-
-//        int packFormat = 6;
-//        String packDescription = "Resources loaded by 'Load My Resources'. Can't be disabled.";
-//        createPackMetaFile(packFormat, packDescription, updatePackMetaProperties);
-
-//        movePackFilesToAssets();
-
     }
-
-//    protected static void movePackFilesToAssets() {
-//        try {
-//            for (File f : RESOURCES_DIR.listFiles()) {
-//                if (!f.getName().endsWith("pack.mcmeta") && !f.getName().endsWith("assets")) {
-//                    File to = new File(ASSETS_DIR.getPath() + "/" + f.getName());
-//                    Files.move(f, to);
-//                    System.out.println("[LOAD MY RESOURCES] Moved resources from pack root to 'assets': " + f.getName());
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    protected static void createPackMetaFile(int packFormat, String description, boolean updateProperties) {
-//        File packMeta = new File(RESOURCES_DIR.getPath() + "/pack.mcmeta");
-//        try {
-//            if (!packMeta.isFile()) {
-//                packMeta.createNewFile();
-//                updateProperties = true;
-//            }
-//            if (updateProperties) {
-//                FileUtils.writeTextToFile(packMeta, false,
-//                        "{",
-//                        "  \"pack\": {",
-//                        "    \"pack_format\": " + packFormat + ",",
-//                        "    \"description\": \"" + description + "\"",
-//                        "  }",
-//                        "}");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public static Pack createPack(String name, boolean forceEnablePack, Supplier<PackResources> packSupplier, Pack.PackConstructor constructor, Pack.Position position, PackSource source) {
         try {
