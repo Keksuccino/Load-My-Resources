@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "de.keksuccino.loadmyresources.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "MixinResourcePackList"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "loadmyresources.mixin-refmap.json",
+  "minVersion": "0.8"
+}

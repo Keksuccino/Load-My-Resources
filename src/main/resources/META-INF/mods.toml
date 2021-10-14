@@ -22,3 +22,17 @@ COPYRIGHT:
 > Load My Resources © Copyright 2021 Keksuccino.
   Load My Resources is licensed under KML.
   See [] for more infos about the license.'''
+
+[[dependencies.loadmyresources]]
+modId="forge"
+mandatory=true
+versionRange="[33,)"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.loadmyresources]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.16,)"
+ordering="NONE"
+side="CLIENT"

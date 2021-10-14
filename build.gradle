@@ -1,15 +1,18 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
+		maven { url = 'https://repo.spongepowered.org/maven' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
 
 version = '1.0.0'
 group = 'de.keksuccino.loadmyresources'
@@ -30,6 +33,7 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+			arg "-mixin.config=loadmyresources.mixin.json"
         }
     }
 	
@@ -40,7 +44,14 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
 
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
+	
+	annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+	testAnnotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
 
+}
+
+mixin {
+    add sourceSets.main, "loadmyresources.mixin-refmap.json"
 }
 
 jar {
@@ -52,7 +63,10 @@ jar {
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"Keksuccino",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+			"TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+            "TweakOrder": 0,
+            "MixinConfigs" : "loadmyresources.mixin.json"
         ])
     }
 }
