@@ -2,13 +2,10 @@ package de.keksuccino.loadmyresources.pack;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import net.minecraft.client.resource.language.LanguageDefinition;
-import net.minecraft.client.resource.metadata.LanguageResourceMetadata;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.DirectoryResourcePack;
 import net.minecraft.resource.ResourceType;
-import net.minecraft.resource.metadata.PackResourceMetadata;
 import net.minecraft.resource.metadata.ResourceMetadataReader;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
@@ -28,17 +25,17 @@ public class LMRDirectoryResourcePack extends DirectoryResourcePack {
 
     @Override
     public String getName() {
-        return "loadmyresources.hiddenpack";
+        return PackHandler.PACK_NAME;
     }
 
     //To not need to create a pack.mcmeta file
     @Override
-    public <T> T parseMetadata(ResourceMetadataReader<T> serializer) {
-        if (serializer == LanguageResourceMetadata.READER) {
-            return (T) new LanguageResourceMetadata(new ArrayList<LanguageDefinition>());
-        } else {
-            return (T) new PackResourceMetadata(new LiteralText(""), 6);
+    public <T> T parseMetadata(ResourceMetadataReader<T> serializer) throws IOException {
+        Object o;
+        try (InputStream inputstream = MinecraftClient.getInstance().getResourceManager().getResource(PackHandler.DUMMY_PACK_META).getInputStream()) {
+            o = parseMetadata(serializer, inputstream);
         }
+        return (T)o;
     }
 
     //To change the assets dir from packRoot/assets to packRoot/
@@ -101,11 +98,5 @@ public class LMRDirectoryResourcePack extends DirectoryResourcePack {
             }
         }
     }
-
-    //Forge Only - Mixins needed in Fabric version: Override 'updatePackList' in 'PackScreen'
-//    @Override
-//    public boolean isHidden() {
-//        return true;
-//    }
 
 }

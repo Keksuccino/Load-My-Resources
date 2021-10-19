@@ -1,5 +1,6 @@
 package de.keksuccino.loadmyresources.mixin;
 
+import de.keksuccino.loadmyresources.pack.PackHandler;
 import de.keksuccino.loadmyresources.utils.ReflectionHelper;
 import net.minecraft.client.gui.screen.pack.PackListWidget;
 import net.minecraft.client.gui.screen.pack.PackScreen;
@@ -27,7 +28,7 @@ public class MixinPackScreen {
             ResourcePackOrganizer.Pack p = this.getPackFromEntry(e);
             if (p != null) {
                 String name = p.getDisplayName().getString();
-                if (name.equals("loadmyresources.hiddenpack")) {
+                if (name.equals(PackHandler.PACK_NAME)) {
                     remove.add(e);
                 }
             }
