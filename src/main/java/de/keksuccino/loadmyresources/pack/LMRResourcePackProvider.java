@@ -1,9 +1,12 @@
 package de.keksuccino.loadmyresources.pack;
 
+import de.keksuccino.loadmyresources.LoadMyResources;
 import net.minecraft.resource.ResourcePack;
 import net.minecraft.resource.ResourcePackProfile;
 import net.minecraft.resource.ResourcePackProvider;
 import net.minecraft.resource.ResourcePackSource;
+import net.minecraft.resource.metadata.PackResourceMetadata;
+import net.minecraft.text.LiteralText;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -15,11 +18,12 @@ public class LMRResourcePackProvider implements ResourcePackProvider {
 
         PackHandler.prepareResourcesFolder();
 
-        ResourcePackProfile p = PackHandler.createPack("loadmyresources.hiddenpack", true, this.createSupplier(), constructor, ResourcePackProfile.InsertionPosition.TOP, ResourcePackSource.PACK_SOURCE_BUILTIN);
+        PackResourceMetadata meta = new PackResourceMetadata(new LiteralText(PackHandler.PACK_NAME), PackHandler.PACK_FORMAT);
+        ResourcePackProfile p = PackHandler.createPack(PackHandler.PACK_NAME, meta, true, this.createSupplier(), constructor, ResourcePackProfile.InsertionPosition.TOP, ResourcePackSource.PACK_SOURCE_NONE);
         if (p != null) {
             consumer.accept(p);
         } else {
-            System.err.println("[LOAD MY RESOURCES] ERROR: Failed to create pack: " + PackHandler.resourcesDirectory.getAbsolutePath());
+            LoadMyResources.LOGGER.error("[LOAD MY RESOURCES] ERROR: Failed to create pack: " + PackHandler.resourcesDirectory.getAbsolutePath());
         }
 
     }

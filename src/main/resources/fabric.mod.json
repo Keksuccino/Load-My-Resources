@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "loadmyresources",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "Load My Resources",
   "description": "Load 'em with style! | Load My Resources © Copyright 2021 Keksuccino. Load My Resources is licensed under KML. See GitHub repo for more informations about the license.",
   "environment": "client",
@@ -25,6 +25,7 @@
   "depends": {
     "fabricloader": ">=0.11.3",
 	"minecraft": "1.17.x",
-    "java": ">=16"
+    "java": ">=16",
+    "fabric": "*"
   }
 }

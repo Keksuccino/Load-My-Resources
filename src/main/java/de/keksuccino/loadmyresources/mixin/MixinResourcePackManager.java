@@ -24,7 +24,7 @@ public class MixinResourcePackManager {
             }
             l.add(new LMRResourcePackProvider());
 
-            System.out.println("[LOAD MY RESOURCES] Pack registered!");
+            LoadMyResources.LOGGER.info("[LOAD MY RESOURCES] Pack registered!");
 
             return l.toArray(new ResourcePackProvider[0]);
 
