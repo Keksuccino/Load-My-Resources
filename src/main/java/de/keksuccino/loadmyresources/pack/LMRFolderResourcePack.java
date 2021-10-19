@@ -1,20 +1,19 @@
 package de.keksuccino.loadmyresources.pack;
 
 import com.google.common.collect.Sets;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.FolderResourcePack;
-import net.minecraft.client.resources.Language;
 import net.minecraft.client.resources.data.IMetadataSection;
-import net.minecraft.client.resources.data.LanguageMetadataSection;
 import net.minecraft.client.resources.data.MetadataSerializer;
-import net.minecraft.client.resources.data.PackMetadataSection;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class LMRFolderResourcePack extends FolderResourcePack {
@@ -25,17 +24,29 @@ public class LMRFolderResourcePack extends FolderResourcePack {
 
     @Override
     public String getPackName() {
-        return "Load My Resources";
+        return PackHandler.PACK_NAME;
     }
 
     //To not need to create a pack.mcmeta file
     @Override
     public <T extends IMetadataSection> T getPackMetadata(MetadataSerializer metadataSerializer, String metadataSectionName) throws IOException {
-        if (metadataSectionName.equals("language")) {
-            return (T) new LanguageMetadataSection(new ArrayList<Language>());
-        } else {
-            return (T) new PackMetadataSection(new TextComponentString(""), 6);
+        return (T)readMetadata(metadataSerializer, Minecraft.getMinecraft().getResourceManager().getResource(PackHandler.DUMMY_PACK_META).getInputStream(), metadataSectionName);
+    }
+
+    private static <T extends IMetadataSection> T readMetadata(MetadataSerializer metadataSerializer, InputStream p_110596_1_, String sectionName) {
+        JsonObject jsonobject = null;
+        BufferedReader bufferedreader = null;
+
+        try {
+            bufferedreader = new BufferedReader(new InputStreamReader(p_110596_1_, StandardCharsets.UTF_8));
+            jsonobject = (new JsonParser()).parse(bufferedreader).getAsJsonObject();
+        } catch (RuntimeException runtimeexception) {
+            throw new JsonParseException(runtimeexception);
+        } finally {
+            IOUtils.closeQuietly((Reader)bufferedreader);
         }
+
+        return (T)metadataSerializer.parseMetadataSection(sectionName, jsonobject);
     }
 
     //To change the assets dir from packRoot/assets to packRoot/

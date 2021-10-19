@@ -3,6 +3,7 @@ package de.keksuccino.loadmyresources.pack;
 import de.keksuccino.loadmyresources.LoadMyResources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResourcePack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.io.File;
@@ -11,6 +12,11 @@ import java.util.List;
 
 public class PackHandler {
 
+    public static final String PACK_NAME = "loadmyresources.hiddenpack";
+//    public static final int PACK_FORMAT = 6;
+//    public static final String PACK_DESCRIPTION = "LMR Resources";
+    public static final ResourceLocation DUMMY_PACK_META = new ResourceLocation("loadmyresources", "dummy.pack.mcmeta");
+
     public static File resourcesDirectory = new File("resources/");
 
     public static void init() {
@@ -18,10 +24,10 @@ public class PackHandler {
         if (LoadMyResources.config != null) {
             resourcesDirectory = new File(LoadMyResources.config.getOrDefault("resource_path", "resources/"));
         } else {
-            System.err.println("[LOAD MY RESOURCES] ERROR: Config not loaded! Can't get resource path! Path set to default 'resources/'!");
+            LoadMyResources.LOGGER.error("[LOAD MY RESOURCES] ERROR: Config not loaded! Can't get resource path! Path set to default 'resources/'!");
         }
 
-        System.out.println("[LOAD MY RESOURCES] PackHandler initialized!");
+        LoadMyResources.LOGGER.info("[LOAD MY RESOURCES] PackHandler initialized!");
 
     }
 
