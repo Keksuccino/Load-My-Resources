@@ -1,7 +1,9 @@
 package de.keksuccino.loadmyresources.pack;
 
 import de.keksuccino.loadmyresources.LoadMyResources;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.packs.PackResources;
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.server.packs.repository.RepositorySource;
@@ -16,7 +18,8 @@ public class LMRRepositorySource implements RepositorySource {
 
         PackHandler.prepareResourcesFolder();
 
-        Pack p = PackHandler.createPack("", true, this.createSupplier(), constructor, Pack.Position.TOP, PackSource.BUILT_IN);
+        PackMetadataSection meta = new PackMetadataSection(new TextComponent(PackHandler.PACK_NAME), PackHandler.PACK_FORMAT);
+        Pack p = PackHandler.createPack(PackHandler.PACK_NAME, meta, true, this.createSupplier(), constructor, Pack.Position.TOP, PackSource.DEFAULT);
         if (p != null) {
             consumer.accept(p);
         } else {

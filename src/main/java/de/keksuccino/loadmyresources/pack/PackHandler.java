@@ -2,6 +2,7 @@ package de.keksuccino.loadmyresources.pack;
 
 import de.keksuccino.loadmyresources.LoadMyResources;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
@@ -11,6 +12,11 @@ import java.io.File;
 import java.util.function.Supplier;
 
 public class PackHandler {
+
+    public static final String PACK_NAME = "loadmyresources.hiddenpack";
+    public static final int PACK_FORMAT = 7;
+    public static final String PACK_DESCRIPTION = "LMR Resources";
+    public static final ResourceLocation DUMMY_PACK_META = new ResourceLocation("loadmyresources", "dummy.pack.mcmeta");
 
     public static File resourcesDirectory = new File("resources/");
 
@@ -34,16 +40,14 @@ public class PackHandler {
 
     }
 
-    public static Pack createPack(String name, boolean forceEnablePack, Supplier<PackResources> packSupplier, Pack.PackConstructor constructor, Pack.Position position, PackSource source) {
+    public static Pack createPack(String name, PackMetadataSection meta, boolean forceEnablePack, Supplier<PackResources> packSupplier, Pack.PackConstructor constructor, Pack.Position position, PackSource source) {
         try {
 
             PackResources res = packSupplier.get();
             Pack pack = null;
 
             try {
-                //To not need to create a pack.mcmeta file
-                PackMetadataSection meta = new PackMetadataSection(new TextComponent(name), 6);
-                //Forge Only - Remove 'res.isHidden()' in Fabric
+                //Forge Only - Remove last param (hidden) in Fabric
                 pack = constructor.create(name, new TextComponent(res.getName()), forceEnablePack, packSupplier, meta, position, source, res.isHidden());
             } catch (Throwable throwable1) {
                 if (res != null) {

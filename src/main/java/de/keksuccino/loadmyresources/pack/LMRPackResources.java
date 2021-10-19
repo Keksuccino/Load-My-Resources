@@ -4,14 +4,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import de.keksuccino.loadmyresources.LoadMyResources;
 import net.minecraft.ResourceLocationException;
-import net.minecraft.client.resources.language.LanguageInfo;
-import net.minecraft.client.resources.metadata.language.LanguageMetadataSection;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.FolderPackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
-import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 
 import java.io.File;
@@ -29,17 +26,32 @@ public class LMRPackResources extends FolderPackResources {
 
     @Override
     public String getName() {
-        return "Load My Resources";
+        return PackHandler.PACK_NAME;
     }
 
     //To not need to create a pack.mcmeta file
     @Override
-    public <T> T getMetadataSection(MetadataSectionSerializer<T> serializer) {
-        if (serializer == LanguageMetadataSection.SERIALIZER) {
-            return (T) new LanguageMetadataSection(new ArrayList<LanguageInfo>());
-        } else {
-            return (T) new PackMetadataSection(new TextComponent(""), 6);
+    public <T> T getMetadataSection(MetadataSectionSerializer<T> serializer) throws IOException {
+        InputStream in = Minecraft.getInstance().getResourceManager().getResource(PackHandler.DUMMY_PACK_META).getInputStream();
+        Object o;
+        try {
+            o = getMetadataFromStream(serializer, in);
+        } catch (Throwable throwable1) {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (Throwable throwable) {
+                    throwable1.addSuppressed(throwable);
+                }
+            }
+            throw throwable1;
         }
+
+        if (in != null) {
+            in.close();
+        }
+
+        return (T)o;
     }
 
     //To change the assets dir from packRoot/assets to packRoot/
