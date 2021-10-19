@@ -3,7 +3,8 @@
   "package": "de.keksuccino.loadmyresources.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "MixinResourcePackList"
+    "MixinResourcePackList",
+    "MixinClientModLoader"
   ],
   "injectors": {
     "defaultRequire": 1

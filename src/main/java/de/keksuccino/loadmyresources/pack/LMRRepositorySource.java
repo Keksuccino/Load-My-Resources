@@ -1,25 +1,31 @@
 package de.keksuccino.loadmyresources.pack;
 
-import net.minecraft.resources.IPackFinder;
-import net.minecraft.resources.IPackNameDecorator;
-import net.minecraft.resources.IResourcePack;
-import net.minecraft.resources.ResourcePackInfo;
+import de.keksuccino.loadmyresources.LoadMyResources;
+import net.minecraft.resources.*;
+import net.minecraft.resources.data.PackMetadataSection;
+import net.minecraft.util.text.StringTextComponent;
 
+import java.io.File;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class LMRRepositorySource implements IPackFinder {
+public class LMRRepositorySource extends FolderPackFinder {
+
+    public LMRRepositorySource() {
+        super(new File("dummy"), IPackNameDecorator.DEFAULT);
+    }
 
     @Override
     public void loadPacks(Consumer<ResourcePackInfo> consumer, ResourcePackInfo.IFactory constructor) {
 
         PackHandler.prepareResourcesFolder();
 
-        ResourcePackInfo p = PackHandler.createPack("", true, this.createSupplier(), constructor, ResourcePackInfo.Priority.TOP, IPackNameDecorator.BUILT_IN);
+        PackMetadataSection meta = new PackMetadataSection(new StringTextComponent(PackHandler.PACK_DESCRIPTION), PackHandler.PACK_FORMAT);
+        ResourcePackInfo p = PackHandler.createPack(PackHandler.PACK_NAME, meta, true, this.createSupplier(), constructor, ResourcePackInfo.Priority.TOP, IPackNameDecorator.DEFAULT);
         if (p != null) {
             consumer.accept(p);
         } else {
-            System.err.println("[LOAD MY RESOURCES] ERROR: Failed to create pack: " + PackHandler.resourcesDirectory.getAbsolutePath());
+            LoadMyResources.LOGGER.error("[LOAD MY RESOURCES] ERROR: Failed to create pack: " + PackHandler.resourcesDirectory.getAbsolutePath());
         }
 
     }

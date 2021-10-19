@@ -5,12 +5,17 @@ import net.minecraft.resources.IPackNameDecorator;
 import net.minecraft.resources.IResourcePack;
 import net.minecraft.resources.ResourcePackInfo;
 import net.minecraft.resources.data.PackMetadataSection;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.ResourceLocation;
 
 import java.io.File;
 import java.util.function.Supplier;
 
 public class PackHandler {
+
+    public static final String PACK_NAME = "loadmyresources.hiddenpack";
+    public static final int PACK_FORMAT = 6;
+    public static final String PACK_DESCRIPTION = "LMR Resources";
+    public static final ResourceLocation DUMMY_PACK_META = new ResourceLocation("loadmyresources", "dummy.pack.mcmeta");
 
     public static File resourcesDirectory = new File("resources/");
 
@@ -19,10 +24,10 @@ public class PackHandler {
         if (LoadMyResources.config != null) {
             resourcesDirectory = new File(LoadMyResources.config.getOrDefault("resource_path", "resources/"));
         } else {
-            System.err.println("[LOAD MY RESOURCES] ERROR: Config not loaded! Can't get resource path! Path set to default 'resources/'!");
+            LoadMyResources.LOGGER.error("[LOAD MY RESOURCES] ERROR: Config not loaded! Can't get resource path! Path set to default 'resources/'!");
         }
 
-        System.out.println("[LOAD MY RESOURCES] PackHandler initialized!");
+        LoadMyResources.LOGGER.info("[LOAD MY RESOURCES] PackHandler initialized!");
 
     }
 
@@ -34,34 +39,13 @@ public class PackHandler {
 
     }
 
-//    public static ResourcePackInfo create(String name, boolean forceEnablePack, Supplier<IResourcePack> packSupplier, ResourcePackInfo.IFactory constructor, ResourcePackInfo.Priority position, IPackNameDecorator source) {
-//        try (IResourcePack iresourcepack = packSupplier.get()) {
-//            PackMetadataSection packmetadatasection = iresourcepack.getMetadataSection(PackMetadataSection.SERIALIZER);
-//            if (forceEnablePack && packmetadatasection == null) {
-//                packmetadatasection = BROKEN_ASSETS_FALLBACK;
-//            }
-//
-//            if (packmetadatasection != null) {
-//                return constructor.create(name, forceEnablePack, packSupplier, iresourcepack, packmetadatasection, position, source);
-//            }
-//
-//            LOGGER.warn("Couldn't find pack meta for pack {}", (Object)name);
-//        } catch (IOException ioexception) {
-//            LOGGER.warn("Couldn't get pack info for: {}", (Object)ioexception.toString());
-//        }
-//
-//        return null;
-//    }
-
-    public static ResourcePackInfo createPack(String name, boolean forceEnablePack, Supplier<IResourcePack> packSupplier, ResourcePackInfo.IFactory constructor, ResourcePackInfo.Priority position, IPackNameDecorator source) {
+    public static ResourcePackInfo createPack(String name, PackMetadataSection meta, boolean forceEnablePack, Supplier<IResourcePack> packSupplier, ResourcePackInfo.IFactory constructor, ResourcePackInfo.Priority position, IPackNameDecorator source) {
         try {
 
             IResourcePack res = packSupplier.get();
             ResourcePackInfo pack = null;
 
             try {
-                //To not need to create a pack.mcmeta file
-                PackMetadataSection meta = new PackMetadataSection(new StringTextComponent(""), 1);
                 pack = constructor.create(name, forceEnablePack, packSupplier, res, meta, position, source);
             } catch (Throwable throwable1) {
                 if (res != null) {
@@ -72,10 +56,6 @@ public class PackHandler {
                     }
                 }
                 throw throwable1;
-            }
-
-            if (res != null) {
-                res.close();
             }
 
             return pack;

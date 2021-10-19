@@ -34,6 +34,11 @@ minecraft {
         client {
             workingDirectory project.file('run')
 			arg "-mixin.config=loadmyresources.mixin.json"
+            mods {
+                loadmyresources {
+                    source sourceSets.main
+                }
+            }
         }
     }
 	
@@ -43,10 +48,10 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
 
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.8'
 	
-	annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
-	testAnnotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+	annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
+	testAnnotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 
 }
 
@@ -57,7 +62,7 @@ mixin {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "Load My Resources",
+            "Specification-Title": "loadmyresources",
             "Specification-Vendor": "Keksuccino",
             "Specification-Version": "1",
             "Implementation-Title": project.name,
@@ -72,4 +77,3 @@ jar {
 }
 
 jar.finalizedBy('reobfJar') 
-

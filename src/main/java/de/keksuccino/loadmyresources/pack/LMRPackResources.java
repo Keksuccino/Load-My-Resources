@@ -2,15 +2,12 @@ package de.keksuccino.loadmyresources.pack;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import net.minecraft.client.resources.Language;
-import net.minecraft.client.resources.data.LanguageMetadataSection;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.FolderPack;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.resources.data.IMetadataSectionSerializer;
-import net.minecraft.resources.data.PackMetadataSection;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ResourceLocationException;
-import net.minecraft.util.text.StringTextComponent;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 
 import java.io.File;
@@ -28,17 +25,17 @@ public class LMRPackResources extends FolderPack {
 
     @Override
     public String getName() {
-        return "Load My Resources";
+        return PackHandler.PACK_NAME;
     }
 
-    //To not need to create a pack.mcmeta file
+    //To not need to create a pack.mcmeta file in the pack
     @Override
-    public <T> T getMetadataSection(IMetadataSectionSerializer<T> serializer) {
-        if (serializer == LanguageMetadataSection.SERIALIZER) {
-            return (T) new LanguageMetadataSection(new ArrayList<Language>());
-        } else {
-            return (T) new PackMetadataSection(new StringTextComponent(""), 6);
+    public <T> T getMetadataSection(IMetadataSectionSerializer<T> serializer) throws IOException {
+        Object o;
+        try (InputStream inputstream = Minecraft.getInstance().getResourceManager().getResource(PackHandler.DUMMY_PACK_META).getInputStream()) {
+            o = getMetadataFromStream(serializer, inputstream);
         }
+        return (T)o;
     }
 
     //To change the assets dir from packRoot/assets to packRoot/
