@@ -5,6 +5,7 @@ import de.keksuccino.loadmyresources.utils.config.Config;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,9 +13,9 @@ import java.io.File;
 
 public class LoadMyResources implements ModInitializer {
 
-    public static final String VERSION = "1.0.1";
-    
-    public static final File HOME_DIR = new File("config/loadmyresources/");
+    public static final String VERSION = "1.0.2";
+
+    public static final File HOME_DIR = new File(MinecraftClient.getInstance().runDirectory, "config/loadmyresources/");
 
     public static Logger LOGGER = LogManager.getLogger();
 
@@ -58,7 +59,7 @@ public class LoadMyResources implements ModInitializer {
 
         try {
 
-            config = new Config(HOME_DIR.getPath() + "/config.cfg");
+            config = new Config(HOME_DIR.getAbsolutePath() + "/config.cfg");
 
             //---------------------
 

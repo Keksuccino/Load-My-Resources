@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "loadmyresources",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "name": "Load My Resources",
   "description": "Load 'em with style! | Load My Resources © Copyright 2021 Keksuccino. Load My Resources is licensed under KML. See GitHub repo for more informations about the license.",
   "environment": "client",
