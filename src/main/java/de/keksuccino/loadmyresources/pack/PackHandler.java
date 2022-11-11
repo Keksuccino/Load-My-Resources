@@ -1,6 +1,7 @@
 package de.keksuccino.loadmyresources.pack;
 
 import de.keksuccino.loadmyresources.LoadMyResources;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackResources;
@@ -18,12 +19,14 @@ public class PackHandler {
     public static final String PACK_DESCRIPTION = "LMR Resources";
     public static final ResourceLocation DUMMY_PACK_META = new ResourceLocation("loadmyresources", "dummy.pack.mcmeta");
 
-    public static File resourcesDirectory = new File("resources/");
+    //TODO übernehmen
+    public static File resourcesDirectory = new File(Minecraft.getInstance().gameDirectory, "resources/");
 
     public static void init() {
 
         if (LoadMyResources.config != null) {
-            resourcesDirectory = new File(LoadMyResources.config.getOrDefault("resource_path", "resources/"));
+            //TODO übernehmen
+            resourcesDirectory = new File(Minecraft.getInstance().gameDirectory, LoadMyResources.config.getOrDefault("resource_path", "resources/"));
         } else {
             LoadMyResources.LOGGER.error("[LOAD MY RESOURCES] ERROR: Config not loaded! Can't get resource path! Path set to default 'resources/'!");
         }
