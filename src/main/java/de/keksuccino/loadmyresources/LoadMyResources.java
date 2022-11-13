@@ -13,9 +13,9 @@ import java.io.File;
 
 public class LoadMyResources implements ModInitializer {
 
-    public static final String VERSION = "1.0.2";
+    public static final String VERSION = "1.0.3";
 
-    public static final File HOME_DIR = new File(MinecraftClient.getInstance().runDirectory, "config/loadmyresources/");
+    public static final File HOME_DIR = new File(getGameDirectory(), "config/loadmyresources/");
 
     public static Logger LOGGER = LogManager.getLogger();
 
@@ -75,6 +75,14 @@ public class LoadMyResources implements ModInitializer {
             e.printStackTrace();
         }
 
+    }
+
+    public static File getGameDirectory() {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            return MinecraftClient.getInstance().runDirectory;
+        } else {
+            return new File("");
+        }
     }
 
 }
