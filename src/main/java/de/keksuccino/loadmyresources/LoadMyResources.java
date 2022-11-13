@@ -21,9 +21,9 @@ import java.io.File;
 @Mod("loadmyresources")
 public class LoadMyResources {
 
-    public static final String VERSION = "1.0.2";
+    public static final String VERSION = "1.0.3";
 
-    public static final File HOME_DIR = new File(Minecraft.getInstance().gameDirectory, "config/loadmyresources/");
+    public static final File HOME_DIR = new File(getGameDirectory(), "config/loadmyresources/");
 
     public static final Logger LOGGER = LogManager.getLogger();
 
@@ -76,6 +76,14 @@ public class LoadMyResources {
             e.printStackTrace();
         }
 
+    }
+
+    public static File getGameDirectory() {
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            return Minecraft.getInstance().gameDirectory;
+        } else {
+            return new File("");
+        }
     }
 
 }
