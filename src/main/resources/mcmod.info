@@ -2,8 +2,8 @@
 {
   "modid": "loadmyresources",
   "name": "Load My Resources",
-  "description": "Load 'em with style!\n\nCOPYRIGHT:\n\n> Load My Resources © Copyright 2021 Keksuccino.\n  Load My Resources is licensed under KML.\n  See [] for more infos about the license.",
-  "version": "1.0.2",
+  "description": "Load 'em with style!\n\nCOPYRIGHT:\n\n> Load My Resources © Copyright 2021-2022 Keksuccino.\n  Load My Resources is licensed under KML.\n  See [] for more infos about the license.",
+  "version": "1.0.3",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
