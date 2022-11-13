@@ -18,10 +18,10 @@ import java.io.File;
 public class LoadMyResources {
 
     //TODO übernehmen
-    public static final String VERSION = "1.0.2";
+    public static final String VERSION = "1.0.3";
 
     //TODO übernehmen
-    public static final File HOME_DIR = new File(Minecraft.getInstance().gameDirectory, "config/loadmyresources/");
+    public static final File HOME_DIR = new File(getGameDirectory(), "config/loadmyresources/");
 
     public static final Logger LOGGER = LogManager.getLogger();
 
@@ -58,7 +58,6 @@ public class LoadMyResources {
 
         try {
 
-            //TODO übernehmen
             config = new Config(HOME_DIR.getAbsolutePath() + "/config.cfg");
 
             //---------------------
@@ -81,6 +80,15 @@ public class LoadMyResources {
     public static void printStackTrace(Exception e) {
         for (StackTraceElement s : e.getStackTrace()) {
             LOGGER.error(s.toString());
+        }
+    }
+
+    //TODO übernehmen
+    public static File getGameDirectory() {
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            return Minecraft.getInstance().gameDirectory;
+        } else {
+            return new File("");
         }
     }
 
