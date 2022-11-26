@@ -18,7 +18,7 @@ import java.io.File;
 public class LoadMyResources {
 
     //TODO übernehmen
-    public static final String VERSION = "1.0.3";
+    public static final String VERSION = "1.0.4";
 
     //TODO übernehmen
     public static final File HOME_DIR = new File(getGameDirectory(), "config/loadmyresources/");
