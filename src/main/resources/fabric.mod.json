@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "id": "loadmyresources",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "name": "Load My Resources",
-  "description": "Load 'em with style! | Load My Resources © Copyright 2021 Keksuccino. Load My Resources is licensed under KML. See GitHub repo for more informations about the license.",
+  "description": "Load 'em with style! | Load My Resources © Copyright 2021-2022 Keksuccino. Load My Resources is licensed under GPLv3.",
   "environment": "client",
   "authors": [
     "Keksuccino"
   ],
   "contributors": [],
   "contact": {},
-  "license": "KML (Keksuccino Mod License)",
+  "license": "GPLv3",
   "icon": "assets/loadmyresources/icon.png",
   "entrypoints": {
     "main": [
