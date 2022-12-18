@@ -9,10 +9,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class Test {
 
-//    private static final ResourceLocation res = new ResourceLocation("testfolder", "megumin.jpg");
+//    private static final ResourceLocation res = new ResourceLocation("mc_cave_animation_2cfb5f2c6ab641c1", "frames_intro/1.jpg");
 //
 //    @SubscribeEvent
-//    public void onRenderMain(ScreenEvent.DrawScreenEvent.Post e) {
+//    public void onRenderMain(ScreenEvent.Render.Post e) {
 //
 //        RenderSystem.setShader(GameRenderer::getPositionTexShader);
 //        RenderSystem.setShaderTexture(0, res);
