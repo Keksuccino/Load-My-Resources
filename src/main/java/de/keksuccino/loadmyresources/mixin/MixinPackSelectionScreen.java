@@ -1,13 +1,12 @@
 package de.keksuccino.loadmyresources.mixin;
 
 import de.keksuccino.loadmyresources.pack.PackHandler;
-import de.keksuccino.loadmyresources.utils.ReflectionHelper;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,7 +24,7 @@ public class MixinPackSelectionScreen {
         List<TransferableSelectionList.PackEntry> remove = new ArrayList<>();
 
         for (TransferableSelectionList.PackEntry e : widget.children()) {
-            PackSelectionModel.Entry p = this.getPackFromEntry(e);
+            PackSelectionModel.Entry p = this.getPackFromEntryLoadMyResources(e);
             if (p != null) {
                 String name = p.getTitle().getString();
                 if (name.equals(PackHandler.PACK_NAME)) {
@@ -40,15 +39,9 @@ public class MixinPackSelectionScreen {
 
     }
 
-    private PackSelectionModel.Entry getPackFromEntry(TransferableSelectionList.PackEntry entry) {
-        try {
-            Field f = ReflectionHelper.findField(TransferableSelectionList.PackEntry.class, "pack", "field_19129");
-            f.setAccessible(true);
-            return (PackSelectionModel.Entry) f.get(entry);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    @Unique
+    private PackSelectionModel.Entry getPackFromEntryLoadMyResources(@NotNull TransferableSelectionList.PackEntry entry) {
+        return ((IMixinTransferableSelectionListPackEntry)entry).getPackLoadMyResources();
     }
 
 }

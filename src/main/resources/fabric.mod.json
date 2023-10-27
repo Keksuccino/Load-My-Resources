@@ -3,7 +3,7 @@
   "id": "loadmyresources",
   "version": "1.0.4",
   "name": "Load My Resources",
-  "description": "Load 'em with style! | Load My Resources © Copyright 2021-2022 Keksuccino. Load My Resources is licensed under GPLv3.",
+  "description": "Load 'em with style! | Load My Resources © Copyright 2021-2023 Keksuccino. Load My Resources is licensed under GPLv3.",
   "environment": "client",
   "authors": [
     "Keksuccino"
@@ -24,7 +24,7 @@
   ],
   "depends": {
     "fabricloader": ">=0.14.6",
-	"minecraft": "1.19.x",
+	"minecraft": ">=1.20.2",
     "java": ">=17",
     "fabric": "*"
   }
