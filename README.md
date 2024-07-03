@@ -1,3 +1,14 @@
+# There will be no more updates for LMR. This mod is not maintained anymore. Please use other resource loader mods instead.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 ## About
 
 Source code for the Load My Resources mod.
